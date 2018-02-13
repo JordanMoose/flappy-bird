@@ -223,8 +223,6 @@ def background():
         h += i
     return sky.convert_alpha()
 
-    # clouds
-
 def ground(state=0):
     ground = pygame.Surface((scr_width, scr_height-ground_pos))
     ground.fill(red)
