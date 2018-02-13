@@ -89,7 +89,7 @@ def bird(y=scr_center[1]-50, rotation=0, flap=0):
     screen.blit(image, pos)
     return image.get_rect().size
 
-def pipe(xloc, yloc, space=pipe_space):
+def pipe(yloc, space=pipe_space):
     """ Create 2 pipes with SPACE pixels between them, blit them, and return their sizes """
     top_height = yloc
     bot_height = scr_height-top_height-space
@@ -175,9 +175,10 @@ def pipe(xloc, yloc, space=pipe_space):
 
     top = top.convert_alpha()
     bot = bot.convert_alpha()
-    screen.blit(top, (xloc, 0))
-    screen.blit(bot, (xloc, top_height + space))
-    return top_size, bot_size
+    pipe = pygame.Surface((width, scr_height)).convert_alpha()
+    pipe.blit(top, (0, 0))
+    pipe.blit(bot, (0, top_height + space))
+    return pipe
 
 # playtime string displayed as <minutes>:<seconds>
 #def playtime_to_str(playtime):
@@ -214,7 +215,7 @@ def background():
     i = scr_height/100
     h = i
     while h <= scr_height*0.9:
-        pygame.draw.rect(sky, (round(80+r),round(170+g),255), (0, h - i, scr_width, h))
+        pygame.draw.rect(sky, (round(80+r),round(150+g),255), (0, h - i, scr_width, h))
         r += 1.2
         g += 0.9
         h += i
@@ -264,11 +265,13 @@ while running:
     #write(playtime_to_str(playtime), (3,1))
 
     # update pipes
-    pipe1_sizes = pipe(pipe1_x, pipe1_y)
+    pipe1 = pipe(pipe1_y)
     pipe1_end = pipe1_x + pipe_width
+    screen.blit(pipe1, (pipe1_x, 0))
     if pipe2_x >= 0:
-        pipe2_sizes = pipe(pipe2_x, pipe2_y)
+        pipe2 = pipe(pipe2_y)
         pipe2_end = pipe2_x + pipe_width
+        screen.blit(pipe2, (pipe2_x, 0))
     else:
         pipe2_end = 0
 
@@ -334,6 +337,7 @@ while running:
             if pipe1_x < -110:
                 pipe1_x = pipe2_x
                 pipe1_y = pipe2_y
+                pipe1 = pipe2
                 pipe2_x = -1
 
             elif pipe1_x <= scr_width - 300:
