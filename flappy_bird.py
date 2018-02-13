@@ -340,12 +340,11 @@ while running:
                 pipe1 = pipe2
                 pipe2_x = -1
 
-            elif pipe1_x <= scr_width - 300:
-                if pipe2_x < 0:
-                    pipe2 = pipe()
-                    pipe2_x = pipe_init_x
-                    pipe2_end = pipe2_x + pipe_width
-                    pipe2_y = randint(60, ground_pos-pipe_space-120)
+            elif pipe1_x <= scr_width - 300 and pipe2_x < 0:
+                pipe2 = pipe()
+                pipe2_x = pipe_init_x
+                pipe2_end = pipe2_x + pipe_width
+                pipe2_y = randint(60, ground_pos-pipe_space-120)
 
             pipe2_x += pipe_speed
 
