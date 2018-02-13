@@ -178,8 +178,8 @@ def pipe(space=pipe_space):
     pipe.fill(red)
     pipe.set_colorkey(red)
     pipe = pipe.convert_alpha()
-    pipe.blit(top, (0, -scr_height))
-    pipe.blit(bot, (0, space))
+    pipe.blit(top, (0, 0))
+    pipe.blit(bot, (0, height + space))
     return pipe
 
 # playtime string displayed as <minutes>:<seconds>
@@ -268,9 +268,9 @@ while running:
     #write(playtime_to_str(playtime), (3,1))
 
     # update pipes
-    screen.blit(pipe1, (pipe1_x, pipe1_y))
+    screen.blit(pipe1, (pipe1_x, pipe1_y - scr_height))
     if pipe2_x >= 0:
-        screen.blit(pipe2, (pipe2_x, pipe2_y))
+        screen.blit(pipe2, (pipe2_x, pipe2_y - scr_height))
     else:
         pipe2_end = 0
 
@@ -285,6 +285,7 @@ while running:
     centered_write(str(score), y=50, size=50, x_diff=3, y_diff=4)
     write("Best: {0}".format(highscore), (5,5), size=29, x_diff=2, y_diff=3)
 
+    # if the bird hasn't died yet
     if not gameover:
 
         # start the game if any key is pressed
@@ -387,6 +388,7 @@ while running:
             playtime += clock.tick(FPS) / 1000.0
             groundstate = (groundstate + 5) % 60
 
+    # if the bird has died
     else:
 
         if death_time < FPS/5.0:
