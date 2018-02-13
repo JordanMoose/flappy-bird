@@ -254,7 +254,8 @@ def ground(state=0):
     screen.blit(ground, (0,ground_pos))
 
 sky = background()
-pipe1 = pipe()
+pipe = pipe()
+pipe1 = pipe
 
 ############
 # Gameplay #
@@ -342,7 +343,7 @@ while running:
                 pipe2_x = -1
 
             elif pipe1_x <= scr_width - 300 and pipe2_x < 0:
-                pipe2 = pipe()
+                pipe2 = pipe
                 pipe2_x = pipe_init_x
                 pipe2_y = randint(60, ground_pos-pipe_space-120)
 
