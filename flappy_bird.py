@@ -28,7 +28,7 @@ darkbrown = (100,65,24)
 # set screen size
 screen = pygame.display.set_mode(scr_size)
 # set screen name
-pygame.display.set_caption("Floppy Bird")
+pygame.display.set_caption("Flappy Bird")
 # initialize clock
 clock = pygame.time.Clock()
 
@@ -89,57 +89,54 @@ def bird(y=scr_center[1]-50, rotation=0, flap=0):
     screen.blit(image, pos)
     return image.get_rect().size
 
-def pipe(yloc, space=pipe_space):
-    """ Create 2 pipes with SPACE pixels between them, blit them, and return their sizes """
-    top_height = yloc
-    bot_height = scr_height-top_height-space
+def pipe(space=pipe_space):
+    """ Create 2 pipes with SPACE pixels between them, blit them to a surface, and return that surface """
+    height = scr_height
     width = pipe_width
 
 
     ### TOP PIPE ###
 
-    top = pygame.Surface((width, top_height))
+    top = pygame.Surface((width, height))
     top.fill(red)
     top.set_colorkey(red)
-    top_size = top.get_rect().size
 
     # end edge line
-    pygame.draw.rect(top, black, (0, top_height-50, width, 45), 5)
-    pygame.draw.rect(top, black, (3, top_height-50, 1, 45))
-    pygame.draw.rect(top, green, (4, top_height-12, 4, 4))
-    pygame.draw.rect(top, brightgreen, (8, top_height-12, width/2, 4))
-    pygame.draw.rect(top, lightgreen, (width/2+8, top_height-12, width/2-17, 4))
-    pygame.draw.rect(top, lightgreen, (width/2, top_height-12, 4, 4))
-    pygame.draw.rect(top, green, (width-11, top_height-12, 4, 4))
-    pygame.draw.rect(top, darkgreen, (width-7, top_height-12, 4, 4))
+    pygame.draw.rect(top, black, (0, height-50, width, 45), 5)
+    pygame.draw.rect(top, black, (3, height-50, 1, 45))
+    pygame.draw.rect(top, green, (4, height-12, 4, 4))
+    pygame.draw.rect(top, brightgreen, (8, height-12, width/2, 4))
+    pygame.draw.rect(top, lightgreen, (width/2+8, height-12, width/2-17, 4))
+    pygame.draw.rect(top, lightgreen, (width/2, height-12, 4, 4))
+    pygame.draw.rect(top, green, (width-11, height-12, 4, 4))
+    pygame.draw.rect(top, darkgreen, (width-7, height-12, 4, 4))
 
     # end inside
-    pygame.draw.rect(top, lightgreen, (4, top_height-47, width/3, 35))
-    pygame.draw.rect(top, brightgreen, (8, top_height-47, 4, 35))
-    pygame.draw.rect(top, green, (width/3-5, top_height-47, 4, 35))
-    pygame.draw.rect(top, green, (width/3+3, top_height-47, width-width/3-5, 35))
-    pygame.draw.rect(top, darkgreen, (width-19, top_height-47, 4, 35))
-    pygame.draw.rect(top, darkgreen, (width-11, top_height-47, 8, 35))
+    pygame.draw.rect(top, lightgreen, (4, height-47, width/3, 35))
+    pygame.draw.rect(top, brightgreen, (8, height-47, 4, 35))
+    pygame.draw.rect(top, green, (width/3-5, height-47, 4, 35))
+    pygame.draw.rect(top, green, (width/3+3, height-47, width-width/3-5, 35))
+    pygame.draw.rect(top, darkgreen, (width-19, height-47, 4, 35))
+    pygame.draw.rect(top, darkgreen, (width-11, height-47, 8, 35))
 
-    pygame.draw.rect(top, black, (width-4, top_height-50, 1, 45))
-    pygame.draw.rect(top, darkestgreen, (4, top_height-50, width-8, 4))
+    pygame.draw.rect(top, black, (width-4, height-50, 1, 45))
+    pygame.draw.rect(top, darkestgreen, (4, height-50, width-8, 4))
 
     # shaft
-    pygame.draw.rect(top, black, (4, -4, width-8, top_height-49), 4)
-    pygame.draw.rect(top, lightgreen, (7, 0, width/3, top_height-55))
-    pygame.draw.rect(top, brightgreen, (11, 0, 4, top_height-55))
-    pygame.draw.rect(top, green, (width/3-1, 0, 4, top_height-55))
-    pygame.draw.rect(top, green, (width/3+7, 0, width-width/3-14, top_height-55))
-    pygame.draw.rect(top, darkgreen, (width-22, 0, 4, top_height-55))
-    pygame.draw.rect(top, darkgreen, (width-14, 0, 8, top_height-55))
+    pygame.draw.rect(top, black, (4, -4, width-8, height-49), 4)
+    pygame.draw.rect(top, lightgreen, (7, 0, width/3, height-55))
+    pygame.draw.rect(top, brightgreen, (11, 0, 4, height-55))
+    pygame.draw.rect(top, green, (width/3-1, 0, 4, height-55))
+    pygame.draw.rect(top, green, (width/3+7, 0, width-width/3-14, height-55))
+    pygame.draw.rect(top, darkgreen, (width-22, 0, 4, height-55))
+    pygame.draw.rect(top, darkgreen, (width-14, 0, 8, height-55))
 
 
     ### BOTTOM PIPE ###
 
-    bot = pygame.Surface((width, bot_height))
+    bot = pygame.Surface((width, height))
     bot.fill(red)
     bot.set_colorkey(red)
-    bot_size = bot.get_rect().size
 
     # end edge line
     pygame.draw.rect(bot, black, (0, 0, width, 45), 5)
@@ -164,20 +161,25 @@ def pipe(yloc, space=pipe_space):
     pygame.draw.rect(bot, darkestgreen, (4, 43, width-8, 4))
 
     # shaft
-    pygame.draw.rect(bot, black, (4, 48, width-8, bot_height), 4)
-    pygame.draw.rect(bot, lightgreen, (7, 51, width/3, bot_height))
-    pygame.draw.rect(bot, brightgreen, (11, 51, 4, bot_height))
-    pygame.draw.rect(bot, green, (width/3-1, 51, 4, bot_height))
-    pygame.draw.rect(bot, green, (width/3+7, 51, width-width/3-14, bot_height))
-    pygame.draw.rect(bot, darkgreen, (width-22, 51, 4, bot_height))
-    pygame.draw.rect(bot, darkgreen, (width-14, 51, 8, bot_height))
+    pygame.draw.rect(bot, black, (4, 48, width-8, height), 4)
+    pygame.draw.rect(bot, lightgreen, (7, 51, width/3, height))
+    pygame.draw.rect(bot, brightgreen, (11, 51, 4, height))
+    pygame.draw.rect(bot, green, (width/3-1, 51, 4, height))
+    pygame.draw.rect(bot, green, (width/3+7, 51, width-width/3-14, height))
+    pygame.draw.rect(bot, darkgreen, (width-22, 51, 4, height))
+    pygame.draw.rect(bot, darkgreen, (width-14, 51, 8, height))
 
 
     top = top.convert_alpha()
     bot = bot.convert_alpha()
-    pipe = pygame.Surface((width, scr_height)).convert_alpha()
-    pipe.blit(top, (0, 0))
-    pipe.blit(bot, (0, top_height + space))
+    # set pipe surface height to 3 times the screen height to allow
+    # for pipes to be blitted a full height above and below
+    pipe = pygame.Surface((width, scr_height * 3))
+    pipe.fill(red)
+    pipe.set_colorkey(red)
+    pipe = pipe.convert_alpha()
+    pipe.blit(top, (0, -scr_height))
+    pipe.blit(bot, (0, space))
     return pipe
 
 # playtime string displayed as <minutes>:<seconds>
@@ -252,6 +254,8 @@ def ground(state=0):
     screen.blit(ground, (0,ground_pos))
 
 sky = background()
+pipe1 = pipe()
+pipe1_end = pipe1_x + pipe_width
 
 ############
 # Gameplay #
@@ -265,13 +269,9 @@ while running:
     #write(playtime_to_str(playtime), (3,1))
 
     # update pipes
-    pipe1 = pipe(pipe1_y)
-    pipe1_end = pipe1_x + pipe_width
-    screen.blit(pipe1, (pipe1_x, 0))
+    screen.blit(pipe1, (pipe1_x, pipe1_y))
     if pipe2_x >= 0:
-        pipe2 = pipe(pipe2_y)
-        pipe2_end = pipe2_x + pipe_width
-        screen.blit(pipe2, (pipe2_x, 0))
+        screen.blit(pipe2, (pipe2_x, pipe2_y))
     else:
         pipe2_end = 0
 
@@ -342,7 +342,9 @@ while running:
 
             elif pipe1_x <= scr_width - 300:
                 if pipe2_x < 0:
+                    pipe2 = pipe()
                     pipe2_x = pipe_init_x
+                    pipe2_end = pipe2_x + pipe_width
                     pipe2_y = randint(60, ground_pos-pipe_space-120)
 
             pipe2_x += pipe_speed
