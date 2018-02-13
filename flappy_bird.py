@@ -255,7 +255,6 @@ def ground(state=0):
 
 sky = background()
 pipe1 = pipe()
-pipe1_end = pipe1_x + pipe_width
 
 ############
 # Gameplay #
@@ -333,6 +332,7 @@ while running:
 
             # update pipe positions
             pipe1_x += pipe_speed
+            pipe1_end = pipe1_x + pipe_width
 
             if pipe1_x < -110:
                 pipe1_x = pipe2_x
@@ -343,10 +343,10 @@ while running:
             elif pipe1_x <= scr_width - 300 and pipe2_x < 0:
                 pipe2 = pipe()
                 pipe2_x = pipe_init_x
-                pipe2_end = pipe2_x + pipe_width
                 pipe2_y = randint(60, ground_pos-pipe_space-120)
 
             pipe2_x += pipe_speed
+            pipe2_end = pipe2_x + pipe_width
 
             bird_left = bird_x - bird_width/3.0
             bird_right = bird_x + bird_width/3.0
