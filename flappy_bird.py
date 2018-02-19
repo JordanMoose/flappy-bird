@@ -281,8 +281,8 @@ while running:
     bird_height = bird_size[1]
 
     # update score
-    centered_write(str(score), y=50, size=50, x_diff=3, y_diff=4)
-    write("Best: {0}".format(highscore), (5,5), size=29, x_diff=2, y_diff=3)
+    centered_write(str(score), y=55, size=50, x_diff=3, y_diff=4)
+    write("Session Best: {0}".format(highscore), (5,5), size=25, x_diff=2, y_diff=3)
 
     # if the bird hasn't died yet
     if not gameover:
@@ -317,7 +317,7 @@ while running:
                         airtime = 0
 
             # update bird speed (enforce max speed)
-            bird_speed = (1.15 * airtime**1.45) - (3 * airtime) - 7
+            bird_speed = (1.1 * airtime**1.42) - (2.75 * airtime) - 7
             if bird_speed < 0 and bird_speed <= -max_speed:
                 bird_speed = -max_speed
             elif bird_speed > 0 and bird_speed >= max_speed:
